@@ -8,35 +8,6 @@ require('./app_api/models/chess');
 const Client = mongoose.model('Client');
 
 
-class ParsedClient {
-
-    
-    constructor(url,pgn,end_time,rated,fen,rules,white_rating,white_result,white_username,black_rating,black_result,black_username)
-    {
-       // this.callsign = callsign;
-       this.url = url;
-       this.pgn = pgn;
-       this.time_control = time_control;
-       this.end_time = end_time;
-       this.rated = rated;
-       this.fen = fen;
-       this.rules = rules;
-       this.white_rating = white.rating;
-       this.white_result = white.result;
-       this.white_username = white.username;
-       this.black_rating = black.rating;
-       this.black_result = black.result;
-       this.black_username = black.username;
-
-
- 
-    }
-}
-
-
-
-
-
 const writeClientModelListToPersist = (client_list) => {
 
     //pull connection string from environment variable
@@ -83,13 +54,13 @@ const createClientModel = (client) => {
 
 
 
-const parseVATSIM = (data) => {
+const parseChess = (data) => {
 
     const clientModelList = [];
 
     let start = false;
 
-data.forEach(element => {
+    data.forEach(element => {
     clientModelList.push(createClientModel(element));
         });
    
@@ -99,7 +70,7 @@ data.forEach(element => {
 
 };
 
-const task = cron.schedule('* * * * *', () => {
+const task = cron.schedule('*/2 * * * *', () => {
 
    axios.get('https://api.chess.com/pub/player/phezzalicious/games/2019/11')
     .then( (response) => {
@@ -108,7 +79,7 @@ const task = cron.schedule('* * * * *', () => {
             //console.log(element.white.result);
         });
         //console.log("This is what i also Receive: response " + response);
-        parseVATSIM(response.data.games);
+        parseChess(response.data.games);
     })
     .catch( (error) => {
         console.log(error);
