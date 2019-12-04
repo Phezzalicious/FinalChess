@@ -10,13 +10,7 @@ const player = (req, res) => {
     const player = req.params.player;
     const year = parseInt(req.params.year);
     const month = parseInt(req.params.month);
-    Client.find(
-        {
-            player: player,
-            year: year,
-            month: month
-        },
-    ),
+   //query here
       //callback
       (err, docs) => {
           //send records back
