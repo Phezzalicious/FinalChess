@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    .row
+        .col-12.col-md-8
+            .container
+                .row
+                .col
+                    h1.text-center Chess Games
+                    form(action='chess', method='POST')
+                        select(name='')
+                            each player in players
+                                option(value=player) #{player}
+                        input(type='submit', value='Submit')
+                    
+
+                .row
+                    .col
+                        .table-responsive
+                        table.table.table-sm.table-hover
+                            thead
+                                tr
+                                    th Url
+                                    th Rules
+                                    th Rated
+                                    th Time Class
+                                    th White Result
+                            tbody
+                                each game in games
+                                    tr
+                                        td #{game.url}
+                                        td #{game.rules}
+                                        td #{game.rated}
+                                        td #{game.timeclass}
+                                        td #{game.white.result}
+
