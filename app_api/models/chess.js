@@ -1,32 +1,27 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
-const playerSchema = new Schema({
-    username: String,
-    rating: Number,
-    result: String
-});
-
-const clientSchema = new Schema({
+const gameSchema = new Schema({
     url: String,
     pgn: String,
     time_control: String,
     end_time: Number,
     rated: Boolean,
-    fen: String,
     time_class: String,
     rules: String,
-    white: playerSchema,
-    black: playerSchema,
+    whiteResult: String,
+    blackResult: String
+    
    
 });
 const playerSchema = new Schema({
+    username: String,
     rating: Number,
-    result: String,
-    id: String,
-    username: String
+    games: [gameSchema]
 });
 
-mongoose.model('Client', clientSchema);
+
+
+
+mongoose.model('Player', playerSchema);
 
 //const Client = mongoose.model('Client', clientSchema);

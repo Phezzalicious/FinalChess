@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Client = mongoose.model('Client');
+const Player = mongoose.model('Player');
 /**
  * PILOT client has departed
  * @param {http request} req 
@@ -11,9 +11,8 @@ const player = (req, res) => {
     const year = parseInt(req.params.year);
     const month = parseInt(req.params.month);
    //query here
-   Client.find({ 
-    white: 
-
+   Player.find({ 
+   
 
 
    }),
