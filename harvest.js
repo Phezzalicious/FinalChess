@@ -13,27 +13,14 @@ const writeplayerModelListToPersist = (player_list) => {
     console.log("Player_list.length "+player_list.length);
     //pull connection string from environment variable
     const uri = process.env.MONGODB_ATLAS_URL;
+    const new_games_list = [];
     const new_player_list = [];
     player_list.forEach(element => {
-      let myBool = true;
-        new_player_list.forEach(playerInList => {
-            if(element.username == playerInList.username){
-                if(!element.username == usernameForEndPoint){
-                    myBool = false;
-                }
-                
-            }
-
-        });
-      if(myBool){
-        new_player_list.push(element);
-      }else{
-          new_player_list.forEach(playerInList => {
-            playerInList.games.push(element.games)
-          });
-          
-      }
+        new_games_list.push(element.games);
     });
+    new_player_list.push(player_list[0]);
+    new_player_list[0].games.splice(0,1);
+    new_player_list[0].games.push(new_games_list);
 
     //this example uses ES6 template literals for string interpolation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -87,22 +74,19 @@ const createGameModel = (player) => {
 const parseChess = (data) => {
 
     const playerModelList = [];
+    
+    console.log("Data,length " + data.length);
+    data.forEach(gameInstance => {
+        if(gameInstance.white.username == usernameForEndPoint){
+            playerModelList.push(createWplayerModel(gameInstance));
+        }else{
+            playerModelList.push(createBplayerModel(gameInstance));
+        }
+
+    });
 
  
-    console.log("Data,length " + data.length);
 
-    data.forEach(element => {
-        console.log("USER" + element.white.username + element.black.username);
-        if(element.white.username == usernameForEndPoint){ 
-            console.log("element length " + element.length);
-            playerModelList.push(createWplayerModel(element));
-        }
-        if (element.black.username == usernameForEndPoint){
-            playerModelList.push(createBplayerModel(element));
-        }
-    });
-console.log("playerModelList length " + playerModelList.length)
-    console.log("WRITING TO DB " + new Date().toTimeString());  
     writeplayerModelListToPersist(playerModelList);
 
 };
@@ -115,6 +99,7 @@ const task = cron.schedule('* * * * *', () => {
         //console.log(response.data.games);
         //console.log("This is what i also Receive: response " + response);
         console.log("responsedatagames length" + response.data.games.length);
+        const goodData = [];
         parseChess(response.data.games);
     })
     .catch( (error) => {
