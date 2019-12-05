@@ -11,6 +11,12 @@ const player = (req, res) => {
     const year = parseInt(req.params.year);
     const month = parseInt(req.params.month);
    //query here
+   Client.find({ 
+    white: 
+
+
+
+   }),
       //callback
       (err, docs) => {
           //send records back

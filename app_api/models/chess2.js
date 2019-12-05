@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-const playerSchema = new Schema({
-    username: String,
-    rating: Number,
-    result: String
-});
 
 const clientSchema = new Schema({
     url: String,
