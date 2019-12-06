@@ -67,6 +67,7 @@ const createBplayerModel = (player) => {
 };
 const createGameModel = (player) => {
     return {
+        games: [{
             url : player.url,
             pgn : player.pgn,
             timecontrol : player.time_control,
@@ -75,10 +76,13 @@ const createGameModel = (player) => {
             time_class : player.time_class,
             rules : player.rules,
             Whiteresult: player.white.result,
-            BlackResult: player.black.result    
-       
+            BlackResult: player.black.result  
+        }],
+            
+
     }
-};
+}
+
 
 
 
@@ -100,7 +104,15 @@ const parseChess = (data) => {
     });
 
  
-console.log("Parse Chess PlayerModelList Length" + playerModelList.length);
+    console.log("Parse Chess PlayerModelList Length" + playerModelList.length);
+    playerModelList.forEach(element => {
+        console.log("Parse Chess PlayerModelList.Games Length" +  element.games.length);
+        console.log("parse chess games.url " + element.games.url);
+       
+    });
+     
+
+
     writeplayerModelListToPersist(playerModelList);
 
 };
