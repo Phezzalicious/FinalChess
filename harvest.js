@@ -3,7 +3,7 @@ const axios = require('axios');
 require('dotenv').config();
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-console.log(process.env.MONGODB_ATLAS_URL) 
+ 
 require('./app_api/models/chess');
 const Player = mongoose.model('Player');
 const usernameForEndPoint = "Phezzalicious";
@@ -16,11 +16,25 @@ const writeplayerModelListToPersist = (player_list) => {
     const new_games_list = [];
     const new_player_list = [];
     player_list.forEach(element => {
-        new_games_list.push(element.games);
+        element.games.forEach(gameElement => {
+            new_games_list.push(createGameModel(gameElement));
+        });
+        
     });
-    new_player_list.push(player_list[0]);
-    new_player_list[0].games.splice(0,1);
+
+    player_list.forEach(element => {
+        if(element.username == usernameForEndPoint){
+            if(new_player_list.length == 0){
+                new_player_list.push(element);
+            }
+        }
+       
+    });
+    console.log("games length" + new_games_list.length);
+    
     new_player_list[0].games.push(new_games_list);
+    console.log("games length" + new_player_list[0].games.length);
+    console.log();
 
     //this example uses ES6 template literals for string interpolation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -46,8 +60,8 @@ const createWplayerModel = (player) => {
 };
 const createBplayerModel = (player) => {
     return {
-        username: player.white.username,
-        rating: player.white.rating,
+        username: player.black.username,
+        rating: player.black.rating,
         games: [createGameModel(player)],  
     }
 };
@@ -86,7 +100,7 @@ const parseChess = (data) => {
     });
 
  
-
+console.log("Parse Chess PlayerModelList Length" + playerModelList.length);
     writeplayerModelListToPersist(playerModelList);
 
 };
