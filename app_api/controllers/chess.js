@@ -16,6 +16,7 @@ const player1 = (req, res) => {
    }),
       //callback
       (err, docs) => {
+        console.log(docs);
           //send records back
           let records = [];
           let isItThere = false;
