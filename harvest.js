@@ -46,8 +46,8 @@ const createWplayerModel = (player) => {
 };
 const createBplayerModel = (player) => {
     return {
-        username: player.white.username,
-        rating: player.white.rating,
+        username: player.black.username,
+        rating: player.black.rating,
         games: [createGameModel(player)],  
     }
 };
@@ -79,12 +79,19 @@ const parseChess = (data) => {
     data.forEach(gameInstance => {
         if(gameInstance.white.username == usernameForEndPoint){
             playerModelList.push(createWplayerModel(gameInstance));
-        }else{
+        }else if(gameInstance.black.username == usernameForEndPoint){
             playerModelList.push(createBplayerModel(gameInstance));
         }
 
     });
-
+    console.log("Before loop"+playerModelList.length)
+    for (let index = 0; index < playerModelList.length; index++) {
+        const element = playerModelList[index];
+        if(!element.username == usernameForEndPoint){
+            
+        }
+    }
+ console.log("After Loop"+playerModelList.length)
  
 
     writeplayerModelListToPersist(playerModelList);
