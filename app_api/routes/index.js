@@ -3,7 +3,7 @@ const router = express.Router();
 const ctrlChess = require('../controllers/chess');
 
 router
-  .route('/api/games/:player/:year/:month')
+  .route('/games/:player/:year/:month')
   .get(ctrlChess.player1);
 
 module.exports = router;

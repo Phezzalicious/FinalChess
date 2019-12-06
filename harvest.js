@@ -16,11 +16,7 @@ const writeplayerModelListToPersist = (player_list) => {
     const new_games_list = [];
     const new_player_list = [];
     player_list.forEach(element => {
-      
-       
        new_games_list.push(element.games[0]);// true
-            
-      
         
     });
     //console.log("new games list length" + new_games_list.length + new_games_list[0].url);
@@ -48,17 +44,14 @@ const writeplayerModelListToPersist = (player_list) => {
     });
    // console.log("new_player_list[0].games[0].url " + new_player_list[0].games[0].url );
     //console.log("new_player_list[0].games[1].url " + new_player_list[0].games[1].url );
-    
-   
-    //console.log("games length" + new_player_list[0].games.length);
-    console.log();
+
 
     //this example uses ES6 template literals for string interpolation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
             .catch(err => console.log(err));
    
     //insert the most recent list - https://mongoosejs.com/docs/api/model.html#model_Model.insertMany
-    var promise = Player.insertMany([new_player_list[0]], (err, docs) => {
+    var promise = Player.create(new_player_list[0], (err, docs) => {
         if(!err){
             console.log(`INSERTED: ${new_player_list.length} records`);
         }else{
@@ -98,12 +91,6 @@ const createGameModel = (player) => {
 
     }
 }
-
-
-
-
-
-
 
 //this is receiving what i see in postman, within the games array
 const parseChess = (data) => {

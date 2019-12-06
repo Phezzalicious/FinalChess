@@ -11,7 +11,7 @@ const connect = () => {
 }
 
 mongoose.connection.on('connected', () => {
-  console.log('connected');
+  console.log('connected in db');
 });
 
 mongoose.connection.on('error', err => {

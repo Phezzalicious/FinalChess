@@ -48,6 +48,7 @@ const chessArrivals = (req, res) => {
   
 const renderGamesPage = (req, res, responseBody) => {
     let message = null;
+    console.log("RESPONSE BODY: " + responseBody);
     console.log("renderGamesPage received responseBody as:  " + responseBody.length);
     if (!(responseBody instanceof Array)) {
       message = 'API lookup error';
