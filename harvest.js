@@ -16,8 +16,9 @@ const writeplayerModelListToPersist = (player_list) => {
     const new_games_list = [];
     const new_player_list = [];
     player_list.forEach(element => {
-       
-            new_games_list.push(element.games);
+       console.log( "playerlist each element length " + element.games.url);
+       new_games_list.push(element.games);// true
+            
       
         
     });
@@ -32,7 +33,10 @@ const writeplayerModelListToPersist = (player_list) => {
        
     });
     new_games_list.forEach(element =>{
+        
+       
         new_player_list[0].games.push(element);
+
     });
     console.log("new_player_list[0].games[0].url " + new_player_list[0].games[0].url );
     console.log("new_player_list[0].games[1].url " + new_player_list[0].games[1].url );
@@ -53,6 +57,7 @@ const writeplayerModelListToPersist = (player_list) => {
             console.log(err);
         }
     });
+
 }
 
 
