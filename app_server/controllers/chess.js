@@ -57,7 +57,7 @@ const renderGamesPage = (req, res, responseBody) => {
     res.render('chess', 
         {
           players: Players,
-          games: responseBody,
+          chosenPlayers: responseBody,
           selectedMonth,
           selectedYear,
           selectedPlayer,

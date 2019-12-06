@@ -13,12 +13,25 @@ const player = (req, res) => {
    //query here
    Player.find({ 
    
-
+      username: player
 
    }),
       //callback
       (err, docs) => {
           //send records back
+          let records = [];
+          let isItThere = false;
+          docs.forEach(element => {
+           records.forEach(record => {
+            if(record.games.url == element.game.url){
+              isItThere = true;
+            }
+           });
+           if(isItThere){
+            records.push(element);
+           }
+                        
+          });
           if(!err){
               res.send(docs);
           }else{

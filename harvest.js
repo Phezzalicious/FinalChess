@@ -34,9 +34,16 @@ const writeplayerModelListToPersist = (player_list) => {
        
     });
     new_games_list.forEach(element =>{
-        
-       
+        let alreadyThere = false;
+       new_player_list[0].games.forEach( gameElement => {
+        if(gameElement.url == element.url){
+            alreadyThere = true;
+        }
+       });
+       if(!alreadyThere){
         new_player_list[0].games.push(element);
+       }
+        
 
     });
     console.log("new_player_list[0].games[0].url " + new_player_list[0].games[0].url );
@@ -51,7 +58,7 @@ const writeplayerModelListToPersist = (player_list) => {
             .catch(err => console.log(err));
    
     //insert the most recent list - https://mongoosejs.com/docs/api/model.html#model_Model.insertMany
-    var promise = Player.insertMany(new_player_list, (err, docs) => {
+    var promise = Player.insertMany([new_player_list[0]], (err, docs) => {
         if(!err){
             console.log(`INSERTED: ${new_player_list.length} records`);
         }else{
