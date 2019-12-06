@@ -39,6 +39,7 @@ const chessArrivals = (req, res) => {
           //console.log(body);
             data = body;
         }
+        console.log(data.length);
         renderGamesPage(req, res, data);
       }
     );
@@ -46,6 +47,7 @@ const chessArrivals = (req, res) => {
   
 const renderGamesPage = (req, res, responseBody) => {
     let message = null;
+    console.log("response body api games length " + responseBody.length);
     if (!(responseBody instanceof Array)) {
       message = 'API lookup error';
      

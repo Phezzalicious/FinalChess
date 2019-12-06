@@ -16,7 +16,7 @@ const writeplayerModelListToPersist = (player_list) => {
     const new_games_list = [];
     const new_player_list = [];
     player_list.forEach(element => {
-       console.log( "playerlist each element length " + element.games.url);
+      
        
        new_games_list.push(element.games[0]);// true
             

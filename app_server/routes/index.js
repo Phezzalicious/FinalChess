@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 /* doing arrivals the server-side (Express and Pug) way */
 router.get('/chess', ctrlChess.chessGameSelection);
-router.get('/chess', ctrlChess.chessArrivals);
+
 
 
 module.exports = router;

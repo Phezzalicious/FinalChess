@@ -11,10 +11,8 @@ const player = (req, res) => {
     const year = parseInt(req.params.year);
     const month = parseInt(req.params.month);
    //query here
-   Player.find({ 
-   
-      username: player
-
+   Player.findOne({
+     username: player
    }),
       //callback
       (err, docs) => {
@@ -33,7 +31,7 @@ const player = (req, res) => {
                         
           });
           if(!err){
-              res.send(docs);
+              res.send(records);
           }else{
               res.send(err);
               console.log(err);
