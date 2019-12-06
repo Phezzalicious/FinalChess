@@ -10,7 +10,7 @@ const usernameForEndPoint = "Phezzalicious";
 
 
 const writeplayerModelListToPersist = (player_list) => {
-    console.log("Player_list.length "+player_list.length);
+    //console.log("Player_list.length "+player_list.length);
     //pull connection string from environment variable
     const uri = process.env.MONGODB_ATLAS_URL;
     const new_games_list = [];
@@ -23,7 +23,7 @@ const writeplayerModelListToPersist = (player_list) => {
       
         
     });
-    console.log("new games list length" + new_games_list.length + new_games_list[0].url);
+    //console.log("new games list length" + new_games_list.length + new_games_list[0].url);
 
     player_list.forEach(element => {
         if(element.username == usernameForEndPoint){
@@ -46,11 +46,11 @@ const writeplayerModelListToPersist = (player_list) => {
         
 
     });
-    console.log("new_player_list[0].games[0].url " + new_player_list[0].games[0].url );
-    console.log("new_player_list[0].games[1].url " + new_player_list[0].games[1].url );
+   // console.log("new_player_list[0].games[0].url " + new_player_list[0].games[0].url );
+    //console.log("new_player_list[0].games[1].url " + new_player_list[0].games[1].url );
     
    
-    console.log("games length" + new_player_list[0].games.length);
+    //console.log("games length" + new_player_list[0].games.length);
     console.log();
 
     //this example uses ES6 template literals for string interpolation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
@@ -110,8 +110,8 @@ const parseChess = (data) => {
 
     const playerModelList = [];
     
-    console.log("Data.length " + data.length);
-    console.log("^^^ Should be Equal^^^");
+    //console.log("Data.length " + data.length);
+    //console.log("^^^ Should be Equal^^^");
     data.forEach(gameInstance => {
         if(gameInstance.white.username == usernameForEndPoint){
             playerModelList.push(createWplayerModel(gameInstance));
@@ -121,8 +121,8 @@ const parseChess = (data) => {
 
     });
 
- console.log("Parse Chess::Playermodel list Games  Lengt" + playerModelList[0].games.length);
-    console.log("Parse Chess:: PlayerModelList Length" + playerModelList.length);
+ //console.log("Parse Chess::Playermodel list Games  Lengt" + playerModelList[0].games.length);
+    //console.log("Parse Chess:: PlayerModelList Length" + playerModelList.length);
     playerModelList.forEach(element => {
         
        
@@ -141,7 +141,7 @@ const task = cron.schedule('* * * * *', () => {
     .then( (response) => {
         //console.log(response.data.games);
         //console.log("This is what i also Receive: response " + response);
-        console.log("response.data.games length" + response.data.games.length);
+        //console.log("response.data.games length" + response.data.games.length);
         const goodData = [];
         parseChess(response.data.games);
     })

@@ -4,6 +4,6 @@ const ctrlChess = require('../controllers/chess');
 
 router
   .route('/api/games/:player/:year/:month')
-  .get(ctrlChess.player);
+  .get(ctrlChess.player1);
 
 module.exports = router;

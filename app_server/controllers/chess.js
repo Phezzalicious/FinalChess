@@ -34,12 +34,13 @@ const chessArrivals = (req, res) => {
     request(
       requestOptions,
       (err, {statusCode}, body) => {
+        console.log("Length of body: " + body.length);
         let data = [];
-        if (statusCode === 200 && body.length) {
-          //console.log(body);
+        
+         
             data = body;
-        }
-        console.log(data.length);
+       
+        console.log("data = body;   " + data.length);
         renderGamesPage(req, res, data);
       }
     );
@@ -47,7 +48,7 @@ const chessArrivals = (req, res) => {
   
 const renderGamesPage = (req, res, responseBody) => {
     let message = null;
-    console.log("response body api games length " + responseBody.length);
+    console.log("renderGamesPage received responseBody as:  " + responseBody.length);
     if (!(responseBody instanceof Array)) {
       message = 'API lookup error';
      
@@ -56,6 +57,7 @@ const renderGamesPage = (req, res, responseBody) => {
         message = 'No results for this airport';
       }
     }
+
     res.render('chess', 
         {
           players: Players,
@@ -76,5 +78,6 @@ const renderGamesPage = (req, res, responseBody) => {
   module.exports = {
     chessArrivals,
     chessGameSelection,
+    renderGamesPage,
    
   };

@@ -5,7 +5,7 @@ const Player = mongoose.model('Player');
  * @param {http request} req 
  * @param {http response} res 
  */
-const player = (req, res) => {
+const player1 = (req, res) => {
   console.log(req.params.player);
     const player = req.params.player;
     const year = parseInt(req.params.year);
@@ -21,6 +21,7 @@ const player = (req, res) => {
           let isItThere = false;
           docs.forEach(element => {
            records.forEach(record => {
+            console.log("WHY YOU NO SHOW UP?????" + record.games.url);
             if(record.games.url == element.game.url){
               isItThere = true;
             }
@@ -47,6 +48,6 @@ const player = (req, res) => {
 
 module.exports = {
 
-  player,
+  player1,
 
 };
