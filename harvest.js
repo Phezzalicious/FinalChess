@@ -93,8 +93,8 @@ const createGameModel = (player) => {
             rated : player.rated,
             time_class : player.time_class,
             rules : player.rules,
-            Whiteresult: player.white.result,
-            BlackResult: player.black.result   
+            whiteResult: player.white.result,
+            blackResult: player.black.result   
 
     }
 }
