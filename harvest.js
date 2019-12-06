@@ -17,7 +17,8 @@ const writeplayerModelListToPersist = (player_list) => {
     const new_player_list = [];
     player_list.forEach(element => {
        console.log( "playerlist each element length " + element.games.url);
-       new_games_list.push(element.games);// true
+       
+       new_games_list.push(element.games[0]);// true
             
       
         
@@ -116,8 +117,7 @@ const parseChess = (data) => {
  console.log("Parse Chess::Playermodel list Games  Lengt" + playerModelList[0].games.length);
     console.log("Parse Chess:: PlayerModelList Length" + playerModelList.length);
     playerModelList.forEach(element => {
-        //console.log("Parse Chess PlayerModelList.games Length" +  element.games.length);
-        //console.log("Parse chess games.url " + element.games.url);
+        
        
     });
      
