@@ -3,7 +3,7 @@ const axios = require('axios');
 require('dotenv').config();
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-console.log(process.env.MONGODB_ATLAS_URL) 
+ 
 require('./app_api/models/chess');
 const Player = mongoose.model('Player');
 const usernameForEndPoint = "Phezzalicious";
@@ -16,11 +16,34 @@ const writeplayerModelListToPersist = (player_list) => {
     const new_games_list = [];
     const new_player_list = [];
     player_list.forEach(element => {
-        new_games_list.push(element.games);
+       console.log( "playerlist each element length " + element.games.url);
+       new_games_list.push(element.games);// true
+            
+      
+        
     });
-    new_player_list.push(player_list[0]);
-    new_player_list[0].games.splice(0,1);
-    new_player_list[0].games.push(new_games_list);
+    console.log("new games list length" + new_games_list.length + new_games_list[0].url);
+
+    player_list.forEach(element => {
+        if(element.username == usernameForEndPoint){
+            if(new_player_list.length == 0){
+                new_player_list.push(element);
+            }
+        }
+       
+    });
+    new_games_list.forEach(element =>{
+        
+       
+        new_player_list[0].games.push(element);
+
+    });
+    console.log("new_player_list[0].games[0].url " + new_player_list[0].games[0].url );
+    console.log("new_player_list[0].games[1].url " + new_player_list[0].games[1].url );
+    
+   
+    console.log("games length" + new_player_list[0].games.length);
+    console.log();
 
     //this example uses ES6 template literals for string interpolation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -34,6 +57,7 @@ const writeplayerModelListToPersist = (player_list) => {
             console.log(err);
         }
     });
+
 }
 
 
@@ -53,6 +77,7 @@ const createBplayerModel = (player) => {
 };
 const createGameModel = (player) => {
     return {
+        
             url : player.url,
             pgn : player.pgn,
             timecontrol : player.time_control,
@@ -61,10 +86,12 @@ const createGameModel = (player) => {
             time_class : player.time_class,
             rules : player.rules,
             Whiteresult: player.white.result,
-            BlackResult: player.black.result    
-       
+            BlackResult: player.black.result   
+
     }
-};
+}
+
+
 
 
 
@@ -75,7 +102,8 @@ const parseChess = (data) => {
 
     const playerModelList = [];
     
-    console.log("Data,length " + data.length);
+    console.log("Data.length " + data.length);
+    console.log("^^^ Should be Equal^^^");
     data.forEach(gameInstance => {
         if(gameInstance.white.username == usernameForEndPoint){
             playerModelList.push(createWplayerModel(gameInstance));
@@ -84,15 +112,16 @@ const parseChess = (data) => {
         }
 
     });
-    console.log("Before loop"+playerModelList.length)
-    for (let index = 0; index < playerModelList.length; index++) {
-        const element = playerModelList[index];
-        if(!element.username == usernameForEndPoint){
-            
-        }
-    }
- console.log("After Loop"+playerModelList.length)
- 
+
+ console.log("Parse Chess::Playermodel list Games  Lengt" + playerModelList[0].games.length);
+    console.log("Parse Chess:: PlayerModelList Length" + playerModelList.length);
+    playerModelList.forEach(element => {
+        //console.log("Parse Chess PlayerModelList.games Length" +  element.games.length);
+        //console.log("Parse chess games.url " + element.games.url);
+       
+    });
+     
+
 
     writeplayerModelListToPersist(playerModelList);
 
@@ -105,7 +134,7 @@ const task = cron.schedule('* * * * *', () => {
     .then( (response) => {
         //console.log(response.data.games);
         //console.log("This is what i also Receive: response " + response);
-        console.log("responsedatagames length" + response.data.games.length);
+        console.log("response.data.games length" + response.data.games.length);
         const goodData = [];
         parseChess(response.data.games);
     })

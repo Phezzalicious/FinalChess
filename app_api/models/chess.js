@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
+
 const gameSchema = new Schema({
     url: String,
     pgn: String,
