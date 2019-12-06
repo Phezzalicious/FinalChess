@@ -16,11 +16,12 @@ const writeplayerModelListToPersist = (player_list) => {
     const new_games_list = [];
     const new_player_list = [];
     player_list.forEach(element => {
-        element.games.forEach(gameElement => {
-            new_games_list.push(createGameModel(gameElement));
-        });
+       
+            new_games_list.push(element.games);
+      
         
     });
+    console.log("new games list length" + new_games_list.length + new_games_list[0].url);
 
     player_list.forEach(element => {
         if(element.username == usernameForEndPoint){
@@ -30,9 +31,13 @@ const writeplayerModelListToPersist = (player_list) => {
         }
        
     });
-    console.log("games length" + new_games_list.length);
+    new_games_list.forEach(element =>{
+        new_player_list[0].games.push(element);
+    });
+    console.log("new_player_list[0].games[0].url " + new_player_list[0].games[0].url );
+    console.log("new_player_list[0].games[1].url " + new_player_list[0].games[1].url );
     
-    new_player_list[0].games.push(new_games_list);
+   
     console.log("games length" + new_player_list[0].games.length);
     console.log();
 
@@ -67,7 +72,7 @@ const createBplayerModel = (player) => {
 };
 const createGameModel = (player) => {
     return {
-        games: [{
+        
             url : player.url,
             pgn : player.pgn,
             timecontrol : player.time_control,
@@ -76,12 +81,11 @@ const createGameModel = (player) => {
             time_class : player.time_class,
             rules : player.rules,
             Whiteresult: player.white.result,
-            BlackResult: player.black.result  
-        }],
-            
+            BlackResult: player.black.result   
 
     }
 }
+
 
 
 
@@ -93,7 +97,8 @@ const parseChess = (data) => {
 
     const playerModelList = [];
     
-    console.log("Data,length " + data.length);
+    console.log("Data.length " + data.length);
+    console.log("^^^ Should be Equal^^^");
     data.forEach(gameInstance => {
         if(gameInstance.white.username == usernameForEndPoint){
             playerModelList.push(createWplayerModel(gameInstance));
@@ -103,11 +108,11 @@ const parseChess = (data) => {
 
     });
 
- 
-    console.log("Parse Chess PlayerModelList Length" + playerModelList.length);
+ console.log("Parse Chess::Playermodel list Games  Lengt" + playerModelList[0].games.length);
+    console.log("Parse Chess:: PlayerModelList Length" + playerModelList.length);
     playerModelList.forEach(element => {
-        console.log("Parse Chess PlayerModelList.Games Length" +  element.games.length);
-        console.log("parse chess games.url " + element.games.url);
+        //console.log("Parse Chess PlayerModelList.games Length" +  element.games.length);
+        //console.log("Parse chess games.url " + element.games.url);
        
     });
      
@@ -124,7 +129,7 @@ const task = cron.schedule('* * * * *', () => {
     .then( (response) => {
         //console.log(response.data.games);
         //console.log("This is what i also Receive: response " + response);
-        console.log("responsedatagames length" + response.data.games.length);
+        console.log("response.data.games length" + response.data.games.length);
         const goodData = [];
         parseChess(response.data.games);
     })
