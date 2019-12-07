@@ -11,7 +11,9 @@ const gameSchema = new Schema({
     time_class: String,
     rules: String,
     whiteResult: String,
-    blackResult: String
+    blackResult: String,
+    whiteUsername: String,
+    blackUsername: String
     
    
 });
