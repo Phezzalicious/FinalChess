@@ -8,5 +8,8 @@ router
 // router
 //   .route('/games/:player')
 //   .get(ctrlChess.otherPlayerData);
+router
+  .route('/chess/submitPlayer/:player')
+  .post(ctrlChess.formData)
 
 module.exports = router;

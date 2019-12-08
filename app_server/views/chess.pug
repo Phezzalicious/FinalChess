@@ -8,11 +8,11 @@ block content
                 .col
                 .jumbotron
                     h1.text-center Chess Games
-                form(action='/submitPlayer' + Submit, method='POST')
-                    select(name='')
-                        each player in players
-                            option(value=player) #{player}
-                    input(type='submit', value='Submit')
+                    form(action='/chess/submitPlayer', method='POST')
+                        select(name='selectedPlayer')
+                            each participant in players
+                                option(value=participant) #{participant}
+                        input(type='submit', value='Submit')
                     .row
                         h2.chosePlayers.username
                         .col
@@ -27,9 +27,9 @@ block content
                                         th White Result
                                 tbody
                                 
-                                    each chosenPlayerGame in chosenPlayers
+                                    each chosenPlayer in chosenPlayers
                                         tr
-                                            each Game in chosenPlayerGame.games 
+                                            each Game in chosenPlayer.games 
                                                 tr
                                                     td #{Game.gameNum}
                                                     td #{Game.rules}

@@ -1,5 +1,4 @@
 extends layout
-
 block content
     .row
         .col-12.col-md-8
@@ -8,24 +7,32 @@ block content
                 .col
                 .jumbotron
                     h1.text-center Chess Games
-                form(action='submitPlayer/', method='POST')
-                    select(name='')
-                        each player in players
-                            option(value=player) #{player}
-                    input(type='submit', value='Submit')
-                    .row
-                        h2.chosePlayers.username
-                        .col
-                            .table-responsive  
-                            table.table.table-sm.table-hover
-                                thead
-                                    tr
-                                        th Url
-                                        th Rules
-                                        th Rated
-                                        th Time Class
-                                        th White Result
-                                tbody
-                                
+                    form(action='/submitPlayer' + Submit, method='POST')
+                        select(name='')
+                            each player in players
+                                option(value=player) #{player}
+                        input(type='submit', value='Submit')
+                        .row
+                            h2.chosePlayers.username
+                            .col
+                                .table-responsive  
+                                table.table.table-sm.table-hover
+                                    thead
+                                        tr
+                                            th Url
+                                            th Rules
+                                            th Rated
+                                            th Time Class
+                                            th White Result
+                                    tbody
+                                        each chosenPlayer in chosenPlayers
+                                                each Game in chosenPlayer.games 
+                                                    tr
+                                                        td #{Game.gameNum}
+                                                        td #{Game.rules}
+                                                        td #{Game.rated}
+                                                        td #{Game.time_class}
+                                                        td #{Game.whiteUsername + " " + Game.whiteResult}
+
                                    
 
