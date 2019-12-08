@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 require('./app_api/models/chess');
 const Player = mongoose.model('Player');
-const usernameForEndPoint = "Hikaru";
+const usernameForEndPoint = "Phezzalicious";
   
 
 //------------Database interactions ----------\\
@@ -32,6 +32,12 @@ const writeplayertoDataBase = (player_list) => {
         .catch(err => console.log(err));
     queryMethod(player_list);
 };
+const ParseElement = (url) => {
+    const gameNum = url.slice(32,);
+      // https://www.chess.com/live/game/  ====== 32      4251189374
+      return gameNum;
+    
+    }
 
 // ----------------- MODELS -------------------\\
 
@@ -53,6 +59,7 @@ const createGameModel = (player) => {
     return {
 
         url: player.url,
+        gameNum: ParseElement(player.url),
         pgn: player.pgn,
         timecontrol: player.time_control,
         endtime: player.end_time,
@@ -66,6 +73,7 @@ const createGameModel = (player) => {
 
     }
 }
+
 //Clean the data 
 const cleanChess = (player_list) => {
     //.games[o] attached to each object
@@ -121,7 +129,7 @@ const shapeChess = (data) => {
 };
 
 //----------- GET Data------------\\
-const task = cron.schedule('*/90 * * * *', () => {
+const task = cron.schedule('* * * * *', () => {
 
     
     axios.get('https://api.chess.com/pub/player/' + usernameForEndPoint + '/games/2019/11')

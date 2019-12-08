@@ -20,7 +20,7 @@ block content
                             table.table.table-sm.table-hover
                                 thead
                                     tr
-                                        th Url
+                                        th Game Number
                                         th Rules
                                         th Rated
                                         th Time Class
@@ -29,9 +29,9 @@ block content
                                 
                                     each chosenPlayerGame in chosenPlayers
                                         tr
-                                            each Game in chosenPlayerGame.games
+                                            each Game in chosenPlayerGame.games 
                                                 tr
-                                                    td #{Game.url}
+                                                    td #{Game.id}
                                                     td #{Game.rules}
                                                     td #{Game.rated}
                                                     td #{Game.time_class}

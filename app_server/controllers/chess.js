@@ -17,11 +17,13 @@ const selectedPlayer = "phezzalicious";
 const selectedMonth = "2019";
 const selectedYear = "11";
 const ParseElement = (url) => {
+const gameNum = url.slice(32,);
+ 
 
-  console.log("FOR ME PARSE ELEMENT " + url);
-  const gameID = "";
+  // https://www.chess.com/live/game/  ====== 32      4251189374
 
-  return url;
+
+  return gameNum;
 
 }
 //render my page, give my pug some data 
@@ -36,15 +38,29 @@ const renderGamesPage = (req, res, responseBody) => {
       message = 'No results for this airport';
     }
   }
+
   const gameNum = [];
+ 
   responseBody.forEach(player => {
+    console.log("USER " + player.username);
     player.games.forEach(element => {
+      //console.log("FOR ME PARSE ELEMENT " + element.url);
       gameNum.push(element.url);
     });
 
   });
   gameNum.forEach(element => {
-    element = ParseElement(element.url);
+    element = ParseElement(element);
+  });
+  responseBody.forEach(player => {
+    player.games.forEach(game =>{
+      gameNum.forEach(id => {
+        if(id == ParseElement(game.url)){
+          game.push(id);
+        }
+      });
+    });
+console.log(responseBody[0].games[0])
   });
   res.render('chess',
     {
@@ -54,7 +70,7 @@ const renderGamesPage = (req, res, responseBody) => {
       selectedYear,
       selectedPlayer,
       message,
-      gameNum
+     
 
 
     }

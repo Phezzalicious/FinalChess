@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
     url: String,
+    gameNum: String,
     pgn: String,
     time_control: String,
     end_time: Number,
