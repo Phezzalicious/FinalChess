@@ -66,7 +66,7 @@ const createGameModel = (player) => {
 
     }
 }
-//clean the data 
+//Clean the data 
 const cleanChess = (player_list) => {
     //.games[o] attached to each object
     const games_list = [];
