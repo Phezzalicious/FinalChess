@@ -6,7 +6,8 @@ const Player = mongoose.model('Player');
  * @param {http request} req 
  * @param {http response} res 
  */
-const player1 = (req, res) => {
+//    '/games/:player/:year/:month'
+const playerData = (req, res) => {
   console.log("player1: " + req.params.player);
   const playerName = req.params.player;
   const year = parseInt(req.params.year);
@@ -16,7 +17,27 @@ const player1 = (req, res) => {
 
   Player.find({},
     (err, docs) => {
-      if(!err){
+      if (!err) {
+        docs.forEach((stuff) => {
+          console.log(stuff.username);
+          msg += stuff.username + "\n";
+          stuff.games.forEach((game) => {
+            console.log("\t" + game.url);
+            msg += "\t" + game.url + "\n";
+          })
+        });
+
+        res.send(docs);
+
+      }
+    }
+  );
+}
+//     /games/:player/
+const otherPlayerData = (req, res) => {
+  Player.find({},
+    (err, docs) => {
+      if (!err) {
         docs.forEach((stuff) => {
           console.log(stuff.username);
           msg += stuff.username + "\n";
@@ -31,42 +52,11 @@ const player1 = (req, res) => {
       }
     }
   );
-
-  //query here
-  // Player.findOne({
-  //   username: playerName
-  // }), (err, docs) => {
-  //   if (err) {
-  //     console.log(err);
-  //   }
-  //   console.log("THIS IS DOCS: " + docs);
-  //   //send records back
-  //   let records = [];
-  //   let isItThere = false;
-  //   docs.forEach(element => {
-  //     records.forEach(record => {
-
-  //       if (record.games.url == element.game.url) {
-  //         isItThere = true;
-  //       }
-  //     });
-  //     if (isItThere) {
-  //       records.push(element);
-  //     }
-
-  //   });
-  //   if (!err) {
-  //     res.send(records);
-  //   } else {
-  //     res.send(err);
-  //     console.log(err);
-  //   }
-  // }
 }
-
 
 module.exports = {
 
-  player1,
+  playerData,
+  otherPlayerData
 
 };

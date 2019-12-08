@@ -28,10 +28,12 @@ block content
                             tbody
                                
                                     each chosenPlayerGame in chosenPlayers
-                                        tr
-                                            td #{chosenPlayerGame.url}
-                                            td #{chosenPlayerGame.rules}
-                                            td #{chosenPlayerGame.rated}
-                                            td #{chosenPlayerGame.timeclass}
-                                            td #{chosenPlayerGame.Whiteresult}
+                                       tr
+                                        each Game in chosenPlayerGame.games
+                                            tr
+                                                td #{Game.url}
+                                                td #{Game.rules}
+                                                td #{Game.rated}
+                                                td #{Game.time_class}
+                                                td #{Game.whiteusername + " " + Game.whiteResult}
 
