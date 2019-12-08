@@ -16,27 +16,7 @@ const Players = [
 const selectedPlayer = "phezzalicious";
 const selectedMonth = "2019";
 const selectedYear = "11";
-
-
-const chessGameSelection = (req, res) => {
-    
-  const path = `/api/games/${selectedPlayer}/${selectedYear}/${selectedMonth}`;
-  const requestOptions = {
-    url: `${apiOptions.server}${path}`,
-    method: 'GET',
-    json: {},
-  };
-  request(
-    requestOptions,
-    (err, {statusCode}, body) => {
-      renderGamesPage(req, res, body);
-    }
-  );
-    
-}
-
-
-  
+//render my page, give my pug some data 
 const renderGamesPage = (req, res, responseBody) => {
   let message = null;
   if (!(responseBody instanceof Array)) {
@@ -63,8 +43,27 @@ const renderGamesPage = (req, res, responseBody) => {
       }
   );
 };
+const chessGameSelection = (req, res) => {
+    
+  const path = `/api/games/${selectedPlayer}/${selectedYear}/${selectedMonth}`;
+  const requestOptions = {
+    url: `${apiOptions.server}${path}`,
+    method: 'GET',
+    json: {},
+  };
+  request(
+    requestOptions,
+    (err, {statusCode}, body) => {
+      renderGamesPage(req, res, body);
+    }
+  );
+    
+}
+
+
 const renderPlayersPage = (req, res, responseBody) => {
   let message = null;
+  console.log("SRSLY SHOW UP" + req.body);
   if (!(responseBody instanceof Array)) {
     message = 'API lookup error';
    
@@ -75,25 +74,26 @@ const renderPlayersPage = (req, res, responseBody) => {
   }
   res.render('chessplayer', 
       {
-        players: Players,
-       
-        selectedMonth,
-        selectedYear,
-        selectedPlayer,
-        message,
 
-          //airports: Airports,
-          //clients: responseBody,
-          //message,
-          //selectedAirport
+       
       }
   );
 };
+/**
+ * 
+ * { (req, res) => {
+  const username = req.body.username
+  //...
+  res.end()
+})} req 
+ * 
+ */
 const submitPlayer = (req, res) =>{
-  const path = `/api/games/${selectedPlayer}/${selectedYear}/${selectedMonth}`;
+  const path = `/submitPlayer`;
   const requestOptions = {
     url: `${apiOptions.server}${path}`,
     method: 'POST',
+   
   };
   request(
     requestOptions,

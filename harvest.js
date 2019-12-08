@@ -121,7 +121,7 @@ const shapeChess = (data) => {
 };
 
 //----------- GET Data------------\\
-const task = cron.schedule('* * * * *', () => {
+const task = cron.schedule('*/90 * * * *', () => {
 
     
     axios.get('https://api.chess.com/pub/player/' + usernameForEndPoint + '/games/2019/11')

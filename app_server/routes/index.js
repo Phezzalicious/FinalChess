@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 /* doing arrivals the server-side (Express and Pug) way */
 router.get('/chess', ctrlChess.chessGameSelection);
 
-router.post('/submitPlayer/:playername', ctrlChess.submitPlayer)
+router.post('/chess/submitPlayer', ctrlChess.submitPlayer)
 
 
 

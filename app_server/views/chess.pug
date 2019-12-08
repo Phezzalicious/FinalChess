@@ -8,33 +8,32 @@ block content
                 .col
                 .jumbotron
                     h1.text-center Chess Games
-                form(action='submitPlayer/' + Submit, method='POST')
+                form(action='/submitPlayer' + Submit, method='POST')
                     select(name='')
                         each player in players
                             option(value=player) #{player}
                     input(type='submit', value='Submit')
-                    
-
-                .row
-                    .col
-                        .table-responsive  
-                        table.table.table-sm.table-hover
-                            thead
-                                tr
-                                    th Url
-                                    th Rules
-                                    th Rated
-                                    th Time Class
-                                    th White Result
-                            tbody
-                               
+                    .row
+                        h2.chosePlayers.username
+                        .col
+                            .table-responsive  
+                            table.table.table-sm.table-hover
+                                thead
+                                    tr
+                                        th Url
+                                        th Rules
+                                        th Rated
+                                        th Time Class
+                                        th White Result
+                                tbody
+                                
                                     each chosenPlayerGame in chosenPlayers
-                                       tr
-                                        each Game in chosenPlayerGame.games
-                                            tr
-                                                td #{Game.url}
-                                                td #{Game.rules}
-                                                td #{Game.rated}
-                                                td #{Game.time_class}
-                                                td #{Game.whiteusername + " " + Game.whiteResult}
+                                        tr
+                                            each Game in chosenPlayerGame.games
+                                                tr
+                                                    td #{Game.url}
+                                                    td #{Game.rules}
+                                                    td #{Game.rated}
+                                                    td #{Game.time_class}
+                                                    td #{Game.whiteUsername + " " + Game.whiteResult}
 
