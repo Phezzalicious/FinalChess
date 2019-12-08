@@ -8,7 +8,6 @@ const Player = mongoose.model('Player');
  */
 //    '/games/:player/:year/:month'
 const playerData = (req, res) => {
-  console.log("player1: " + req.params.player);
   const playerName = req.params.player;
   const year = parseInt(req.params.year);
   const month = parseInt(req.params.month);
@@ -18,45 +17,36 @@ const playerData = (req, res) => {
   Player.find({},
     (err, docs) => {
       if (!err) {
-        docs.forEach((stuff) => {
-          console.log(stuff.username);
-          msg += stuff.username + "\n";
-          stuff.games.forEach((game) => {
-            console.log("\t" + game.url);
-            msg += "\t" + game.url + "\n";
-          })
-        });
-
-        res.send(docs);
-
+        //res.send(docs);
       }
+      res.send(docs);
     }
   );
 }
-//     /games/:player/
-const otherPlayerData = (req, res) => {
-  Player.find({},
-    (err, docs) => {
-      if (!err) {
-        docs.forEach((stuff) => {
-          console.log(stuff.username);
-          msg += stuff.username + "\n";
-          stuff.games.forEach((game) => {
-            console.log("\t" + game.url);
-            msg += "\t" + game.url + "\n";
-          })
-        });
+// //     /games/:player/
+// const otherPlayerData = (req, res) => {
+//   Player.find({},
+//     (err, docs) => {
+//       if (!err) {
+//         docs.forEach((stuff) => {
+//           console.log(stuff.username);
+//           msg += stuff.username + "\n";
+//           stuff.games.forEach((game) => {
+//             console.log("\t" + game.url);
+//             msg += "\t" + game.url + "\n";
+//           })
+//         });
 
-        res.send(msg);
+//         res.send(msg);
 
-      }
-    }
-  );
-}
+//       }
+//     }
+//   );
+// }
 
 module.exports = {
 
   playerData,
-  otherPlayerData
+ 
 
 };

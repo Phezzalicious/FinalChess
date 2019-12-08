@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 
 require('./app_api/models/chess');
 const Player = mongoose.model('Player');
-const usernameForEndPoint = "Phezzalicious";
-
+const usernameForEndPoint = "Hikaru";
+  
 
 //------------Database interactions ----------\\
 const queryMethod = (player_list) => {
@@ -123,7 +123,7 @@ const shapeChess = (data) => {
 //----------- GET Data------------\\
 const task = cron.schedule('* * * * *', () => {
 
-
+    
     axios.get('https://api.chess.com/pub/player/' + usernameForEndPoint + '/games/2019/11')
         .then((response) => {
 

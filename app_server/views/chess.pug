@@ -6,17 +6,18 @@ block content
             .container
                 .row
                 .col
+                .jumbotron
                     h1.text-center Chess Games
-                    form(action='chess', method='POST')
-                        select(name='')
-                            each player in players
-                                option(value=player) #{player}
-                        input(type='submit', value='Submit')
+                form(action='submitPlayer/' + Submit, method='POST')
+                    select(name='')
+                        each player in players
+                            option(value=player) #{player}
+                    input(type='submit', value='Submit')
                     
 
                 .row
                     .col
-                        .table-responsive
+                        .table-responsive  
                         table.table.table-sm.table-hover
                             thead
                                 tr
