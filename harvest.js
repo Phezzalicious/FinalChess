@@ -6,9 +6,14 @@ var Schema = mongoose.Schema;
 
 require('./app_api/models/chess');
 const Player = mongoose.model('Player');
-let usernameForEndPoint = "abhijeetgupta1016";
-//gmsrinath
-//firouzja2003
+let Players = [
+    "Phezzalicious",
+    "Hikaru",
+    "abnhijeetgupta1016",
+    "Izoria123"
+]
+let usernameForEndPoint = Players[Math.floor(Math.random()*Players.length)];
+
 
 
 //------------Database interactions ----------\\
@@ -134,10 +139,10 @@ const shapeChess = (data) => {
 };
 //----------- GET Data------------\\
 const task = cron.schedule('*/90 * * * *', () => {  
-//    var currentYear = Date.getFullYear();
-//    var currentMonth = Date.getMonth(); 
+   var currentYear = new Date().getFullYear();
+  var currentMonth = new Date().getMonth(); 
 
-    axios.get('https://api.chess.com/pub/player/' + usernameForEndPoint + '/games/2019/11')
+    axios.get('https://api.chess.com/pub/player/' + usernameForEndPoint + '/games/'+currentYear+'/'+currentMonth)
         .then((response) => {
             console.log("response.data.games Length: " + response.data.games.length);
 
