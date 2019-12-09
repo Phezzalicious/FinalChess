@@ -20,7 +20,7 @@ block content
                             table.table.table-dark.table-sm.table-hover
                                 thead
                                     tr
-                                        th Game Number
+                                        th Game Number 
                                         th Rules
                                         th Rated
                                         th Time Class
@@ -31,7 +31,9 @@ block content
                                         tr
                                             each Game in chosenPlayer.games 
                                                 tr
-                                                    td #{Game.gameNum}
+                                                    td  
+                                                        a(href=Game.url)
+                                                            #{Game.gameNum}
                                                     td #{Game.rules}
                                                     td #{Game.rated}
                                                     td #{Game.time_class}
