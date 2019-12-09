@@ -37,10 +37,6 @@ const renderGamesPage = (req, res, responseBody) => {
       message = 'No results for this airport';
     }
   }
-
-
-  
-
 res.render('chess',
   {
     players: Players,
