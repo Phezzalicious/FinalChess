@@ -7,17 +7,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Chess Games' });
 });
 
-
-
-/* doing arrivals the server-side (Express and Pug) way */
 router.get('/chess', ctrlChess.chessGameSelection);
-
 router.post('/chess/submitPlayer', ctrlChess.submitPlayer);
 
 router.get('/chess/PlayerInfo', ctrlChess.submitPlayerInfo);
 router.post('/chess/PlayerInfo', ctrlChess.submitPlayerInfo);
-
-
-
 
 module.exports = router;

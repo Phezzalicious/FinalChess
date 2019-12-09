@@ -103,9 +103,9 @@ const renderPlayersPage = (req, res, responseBody) => {
 
 const submitPlayer = (req, res) => {
   const username = req.body.selectedPlayer;
-  //console.log("HELLLLLLLOOOOOOOO " + req.body.selectedPlayer);
+
   const path = `/api/chess/submitPlayer/${username}`;
-  console.log(apiOptions.server + path);
+
   const requestOptions = {
     url: `${apiOptions.server}${path}`,
     method: 'POST',
@@ -114,8 +114,6 @@ const submitPlayer = (req, res) => {
   request(
     requestOptions,
     (err, { statusCode }, body) => {
-      console.log(body);
-      console.log("THAT WAS BODY");
       renderPlayersPage(req, res, body)
     }
   );
@@ -125,78 +123,76 @@ const MakePlayerInfo = (responseBody) => {
 
   //OVERALL WIN-LOSS-DRAW WHITE WIN-LOSS-DRAW BLACK WIN-LOSS-DRAW
   let myNumbers = [];
+
+  //theres 100% a better way to do this Math (for my pug template)
   let totalGames = 0;
   let whiteWins = 0;
   let blackWins = 0;
-  let drawWins=0;
-  let whiteGames=0;
-  let blackGames=0;
-  let WdrawWins=0;
-  let BdrawWins=0;
-  let ourUserName = responseBody.username; 
+  let drawWins = 0;
+  let whiteGames = 0;
+  let blackGames = 0;
+  let WdrawWins = 0;
+  let BdrawWins = 0;
+  let ourUserName = responseBody.username;
   responseBody.games.forEach(element => {
     totalGames += 1;
-    if(element.whiteResult == "repetition" || element.blackResult == "agreed"){
-      drawWins+=1;
-      if(ourUserName == element.whiteUsername){
-        WdrawWins+=1;
-      }else{
-        BdrawWins+=1;
+    if (element.whiteResult == "repetition" || element.blackResult == "agreed") {
+      drawWins += 1;
+      if (ourUserName == element.whiteUsername) {
+        WdrawWins += 1;
+      } else {
+        BdrawWins += 1;
       }
     }
 
-    
+
     if (element.whiteUsername == ourUserName) {
-      whiteGames+=1;
+      whiteGames += 1;
       if (element.whiteResult == "win") {
         whiteWins += 1;
       }
     } else {
-      blackGames+=1;
+      blackGames += 1;
       if (element.blackResult == "win") {
         blackWins += 1;
       }
 
     }
   });
- 
-  myNumbers.push((whiteWins+blackWins)/totalGames.toString());
-  myNumbers.push((totalGames-drawWins-whiteWins-blackWins)/totalGames.toString());
-  myNumbers.push(drawWins/totalGames.toString());
+  //overall
+  myNumbers.push((whiteWins + blackWins) / totalGames.toString());
+  myNumbers.push((totalGames - drawWins - whiteWins - blackWins) / totalGames.toString());
+  myNumbers.push(drawWins / totalGames.toString());
+  //white
+  myNumbers.push(whiteWins / whiteGames.toString());
+  myNumbers.push((whiteGames - WdrawWins - whiteWins) / whiteGames.toString());
+  myNumbers.push((WdrawWins / whiteGames).toString());
+  myNumbers.push((whiteWins + blackWins) / totalGames.toString());
+  //black
+  myNumbers.push(blackWins / blackGames.toString());
+  myNumbers.push((blackGames - BdrawWins - blackWins) / blackGames.toString());
+  myNumbers.push(BdrawWins / blackGames.toString());
+  //to send over pretty
+  let myFixedNumbers = [];
 
-  myNumbers.push(whiteWins/whiteGames.toString());
-  myNumbers.push((whiteGames-WdrawWins-whiteWins)/whiteGames.toString());
-  myNumbers.push((WdrawWins/whiteGames).toString());  
-  myNumbers.push((whiteWins+blackWins)/totalGames.toString());
+  myNumbers.forEach(number => {
 
-  myNumbers.push(blackWins/blackGames.toString());
-  myNumbers.push((blackGames-BdrawWins-blackWins)/blackGames.toString());
-  myNumbers.push(BdrawWins/blackGames.toString());
-  let myFixedNumbers =[];
-  
-myNumbers.forEach(number =>{
-  console.log("HERE I AM: " + number.toString().slice(2,3));
-  if(number.toString().slice(2,3) == '0'){
-    number = number.toString().slice(3,4) + ' %';
-  }else{
-    number = number.toString().slice(2,4) + ' %';
-  }
-  
-  console.log("YO WADDUP" + number);
-  myFixedNumbers.push(number);
+    if (number.toString().slice(2, 3) == '0') {
+      number = number.toString().slice(3, 4) + ' %';
+    } else {
+      number = number.toString().slice(2, 4) + ' %';
+    }
 
-});
-myFixedNumbers.forEach(number =>{
-  //number = number.toString().slice(2,4);
-  console.log("YO WADDUP" + number);
 
-});
-  //white wins
+    myFixedNumbers.push(number);
+
+  });
+
   return myFixedNumbers;
 }
 const renderPlayersInfoPage = (req, res, responseBody) => {
   let message = null;
-  //console.log("SRSLY SHOW UP" + responseBody[0].username);
+
   if (!(responseBody instanceof Array)) {
     message = 'API lookup error';
 
@@ -206,7 +202,7 @@ const renderPlayersInfoPage = (req, res, responseBody) => {
     }
   }
   let myNumbers = MakePlayerInfo(responseBody);
-  console.log("HEY THIS IS WHAT IM SENDING TO PUG: " + responseBody.username);
+
   res.render('chessplayerinfo',
     {
       chosenPlayer: responseBody,
@@ -221,10 +217,10 @@ const renderPlayersInfoPage = (req, res, responseBody) => {
 };
 const submitPlayerInfo = (req, res) => {
   let username = req.body.selectedPlayer;
-  if(req.body.selectedPlayer == null){
+  if (req.body.selectedPlayer == null) {
     username = 'Hikaru';
   }
-  //console.log("HELLLLLLLOOOOOOOO " + req.body.selectedPlayer);
+
   const path = `/api/chess/submitPlayer/${username}`;
   console.log(`${apiOptions.server}${path}`);
   const requestOptions = {
@@ -235,8 +231,6 @@ const submitPlayerInfo = (req, res) => {
   request(
     requestOptions,
     (err, { statusCode }, body) => {
-      console.log(body);
-      console.log("THAT WAS BODY INFO");
       renderPlayersInfoPage(req, res, body)
     }
   );
@@ -247,8 +241,6 @@ const submitPlayerInfo = (req, res) => {
 module.exports = {
   submitPlayer,
   chessGameSelection,
-  renderGamesPage,
-  renderPlayersPage,
   submitPlayerInfo
 
 };
