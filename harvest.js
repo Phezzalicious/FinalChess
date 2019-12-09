@@ -6,16 +6,20 @@ var Schema = mongoose.Schema;
 
 require('./app_api/models/chess');
 const Player = mongoose.model('Player');
-const usernameForEndPoint = "Phezzalicious";
-  
+let usernameForEndPoint = "abhijeetgupta1016";
+//gmsrinath
+//firouzja2003
+
 
 //------------Database interactions ----------\\
 const queryMethod = (player_list) => {
     //cleanDataBase(player_list);
-    console.log("games[5] user: " + player_list.games[5].blackUsername);
+    //console.log(player_list);
+    // console.log("^^^^^^^^^^^^^^^ THATS PLAYER_LIST");
+    // console.log("games[5] user: " + player_list.games[5].blackUsername);
     Player.findOneAndDelete({ 'username': player_list.username }, (err, whatIFound)=> {
-        console.log(player_list.username);
-        console.log("This is my object" + whatIFound);
+        // console.log(player_list.username);
+        // console.log("This is my object" + whatIFound);
     });
     Player.create(player_list, (err, docs) => {
         if (!err) {
@@ -80,10 +84,11 @@ const cleanChess = (player_list) => {
     const games_list = [];
     const new_player = [];
     console.log("cleanChess: ");
+    console.log(player_list);
+    console.log("^^PLAYERLIST^^")
     //every player pushes his game to the list
     player_list.forEach(element => {
         games_list.push(element.games[0]);// true
-
     });
     console.log("gameslist length, games list[0].games.url: " + games_list.length + " " + games_list[0].url);
 
@@ -127,14 +132,13 @@ const shapeChess = (data) => {
 
     cleanChess(player_list);
 };
-
 //----------- GET Data------------\\
-const task = cron.schedule('*/90 * * * *', () => {
+const task = cron.schedule('*/90 * * * *', () => {  
+//    var currentYear = Date.getFullYear();
+//    var currentMonth = Date.getMonth(); 
 
-    
     axios.get('https://api.chess.com/pub/player/' + usernameForEndPoint + '/games/2019/11')
         .then((response) => {
-
             console.log("response.data.games Length: " + response.data.games.length);
 
             shapeChess(response.data.games);
@@ -149,3 +153,10 @@ const task = cron.schedule('*/90 * * * *', () => {
 );
 
 module.exports = task;
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

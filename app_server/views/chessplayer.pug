@@ -6,32 +6,35 @@ block content
                 .row
                 .col
                 .jumbotron
-                    h1.text-center Chess Games
+                    h1.text-center Chess Games - #{username}
                     form(action='/chess/submitPlayer', method='POST')
                         select(name='selectedPlayer')
                             each player in players
                                 option(value=player) #{player}
                         input(type='submit', value='Submit')
-                        .row
-                            h2.chosePlayers.username
-                            .col
-                                .table-responsive  
-                                table.table.table-sm.table-hover
-                                    thead
+                .row
+                    //h2.text-center #{chosenPlayer.username} 
+                    .col
+                        .table-responsive  
+                            table.table.table-dark.table-sm.table-hover
+                                thead
+                                    tr
+                                        th Game Number
+                                        th Rules
+                                        th Rated  
+                                        th Time Class
+                                        th White Result
+                                        //- th Win Percentage
+                                        //- th Draw Percentage 
+                                        //- th Timeout % 
+                                        
+                                tbody
+                                    each Game in chosenPlayer.games 
                                         tr
-                                            th Url
-                                            th Rules
-                                            th Rated
-                                            th Time Class
-                                            th White Result
-                                    tbody
-                                        each Game in chosenPlayer.games 
-                                            tr
-                                                td #{Game.gameNum}
-                                                td #{Game.rules}
-                                                td #{Game.rated}
-                                                td #{Game.time_class}
-                                                td #{Game.whiteUsername + " " + Game.whiteResult}
-
-                                   
+                                            td #{Game.gameNum}
+                                            td #{Game.rules}
+                                            td #{Game.rated}
+                                            td #{Game.time_class}
+                                            td #{Game.whiteUsername + " " + Game.whiteResult}
+                        
 
