@@ -37,10 +37,9 @@ const renderGamesPage = (req, res, responseBody) => {
       message = 'No results for this airport';
     }
   }
-
-
-  
-
+  responseBody.forEach(element => {
+    console.log("MY FOREACH WORKS" + element.username);
+  });
 res.render('chess',
   {
     players: Players,
