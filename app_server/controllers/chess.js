@@ -108,7 +108,7 @@ const submitPlayer = (req, res) => {
     requestOptions,
     (err, { statusCode }, body) => {
   
-    }
+    }    
   );
 
 }
