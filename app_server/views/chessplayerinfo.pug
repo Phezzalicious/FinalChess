@@ -1,0 +1,57 @@
+extends layout
+block content
+    .row
+        .col-12.col-md-8
+            .container
+                .row
+                .col
+                .jumbotron
+                    h1.text-center Chess Games - #{username}
+                .row
+                    h5.text-center Overall
+                    .table-responsive  
+                    table.table.table-dark.table-sm.table-hover
+                        thead
+                            tr
+                                th Win %
+                                th Loss %                                      
+                                th Draw %                                    
+                        tbody
+                            tr
+                                td #{Numbers[0]}
+                                td #{Numbers[1]}
+                                td #{Numbers[2]}
+                                    
+                    h5.text-center White
+                    .table-responsive  
+                        table.table.table-dark.table-sm.table-hover
+                            thead
+                                tr
+                                    th Win %
+                                    th Loss %                                      
+                                    th Draw %                              
+                            tbody
+                                tr
+                                    td #{Numbers[3]}
+                                    td #{Numbers[4]}
+                                    td #{Numbers[5]}                                         
+                    h5.text-center Black
+                    .table-responsive  
+                        table.table.table-dark.table-sm.table-hover
+                            thead
+                                tr
+                                    th Win %
+                                    th Loss %                                      
+                                    th Draw % 
+                            tbody
+                                tr
+                                    td #{Numbers[6]}
+                                    td #{Numbers[7]}
+                                    td #{Numbers[8]}      
+                .row
+                    form(action='/chess/PlayerInfo', method='POST')
+                        select(name='selectedPlayer')
+                            each player in players
+                                option(value=player) #{player}
+                        input(type='submit', value='Submit')
+                                            

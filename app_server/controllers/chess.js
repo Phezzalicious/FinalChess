@@ -10,6 +10,9 @@ const apiOptions = {
 const Players = [
   "Hikaru",
   "Phezzalicious",
+  "abhijeetgupta1016",
+  "Izoria123"
+
 
 
 ];
@@ -40,19 +43,21 @@ const renderGamesPage = (req, res, responseBody) => {
   responseBody.forEach(element => {
     console.log("MY FOREACH WORKS" + element.username);
   });
-res.render('chess',
-  {
-    players: Players,
-    chosenPlayers: responseBody,
-    selectedMonth,
-    selectedYear,
-    selectedPlayer,
-    message,
+
+
+  res.render('chess',
+    {
+      players: Players,
+      chosenPlayers: responseBody,
+      selectedMonth,
+      selectedYear,
+      selectedPlayer,
+      message,
 
 
 
-  }
-);
+    }
+  );
 };
 const chessGameSelection = (req, res) => {
 
@@ -83,11 +88,12 @@ const renderPlayersPage = (req, res, responseBody) => {
       message = 'No results for this airport';
     }
   }
-  console.log("HEY THIS IS WHAT IM SENDING TO PUG: " + res.username);
+  console.log("HEY THIS IS WHAT IM SENDING TO PUG: " + responseBody.username);
   res.render('chessplayer',
     {
-      chosenPlayers: responseBody,
-      players: Players
+      chosenPlayer: responseBody,
+      players: Players,
+      username: responseBody.username
 
 
 
@@ -99,23 +105,150 @@ const submitPlayer = (req, res) => {
   const username = req.body.selectedPlayer;
   //console.log("HELLLLLLLOOOOOOOO " + req.body.selectedPlayer);
   const path = `/api/chess/submitPlayer/${username}`;
+  console.log(apiOptions.server + path);
   const requestOptions = {
     url: `${apiOptions.server}${path}`,
     method: 'POST',
+    json: {}
   };
   request(
     requestOptions,
     (err, { statusCode }, body) => {
+      console.log(body);
+      console.log("THAT WAS BODY");
+      renderPlayersPage(req, res, body)
+    }
+  );
+
+}
+const MakePlayerInfo = (responseBody) => {
+
+  //OVERALL WIN-LOSS-DRAW WHITE WIN-LOSS-DRAW BLACK WIN-LOSS-DRAW
+  let myNumbers = [];
+  let totalGames = 0;
+  let whiteWins = 0;
+  let blackWins = 0;
+  let drawWins=0;
+  let whiteGames=0;
+  let blackGames=0;
+  let WdrawWins=0;
+  let BdrawWins=0;
+  let ourUserName = responseBody.username; 
+  responseBody.games.forEach(element => {
+    totalGames += 1;
+    if(element.whiteResult == "repetition" || element.blackResult == "agreed"){
+      drawWins+=1;
+      if(ourUserName == element.whiteUsername){
+        WdrawWins+=1;
+      }else{
+        BdrawWins+=1;
+      }
+    }
+
+    
+    if (element.whiteUsername == ourUserName) {
+      whiteGames+=1;
+      if (element.whiteResult == "win") {
+        whiteWins += 1;
+      }
+    } else {
+      blackGames+=1;
+      if (element.blackResult == "win") {
+        blackWins += 1;
+      }
+
+    }
+  });
+ 
+  myNumbers.push((whiteWins+blackWins)/totalGames.toString());
+  myNumbers.push((totalGames-drawWins-whiteWins-blackWins)/totalGames.toString());
+  myNumbers.push(drawWins/totalGames.toString());
+
+  myNumbers.push(whiteWins/whiteGames.toString());
+  myNumbers.push((whiteGames-WdrawWins-whiteWins)/whiteGames.toString());
+  myNumbers.push((WdrawWins/whiteGames).toString());  
+  myNumbers.push((whiteWins+blackWins)/totalGames.toString());
+
+  myNumbers.push(blackWins/blackGames.toString());
+  myNumbers.push((blackGames-BdrawWins-blackWins)/blackGames.toString());
+  myNumbers.push(BdrawWins/blackGames.toString());
+  let myFixedNumbers =[];
   
+myNumbers.forEach(number =>{
+  console.log("HERE I AM: " + number.toString().slice(2,3));
+  if(number.toString().slice(2,3) == '0'){
+    number = number.toString().slice(3,4) + ' %';
+  }else{
+    number = number.toString().slice(2,4) + ' %';
+  }
+  
+  console.log("YO WADDUP" + number);
+  myFixedNumbers.push(number);
+
+});
+myFixedNumbers.forEach(number =>{
+  //number = number.toString().slice(2,4);
+  console.log("YO WADDUP" + number);
+
+});
+  //white wins
+  return myFixedNumbers;
+}
+const renderPlayersInfoPage = (req, res, responseBody) => {
+  let message = null;
+  //console.log("SRSLY SHOW UP" + responseBody[0].username);
+  if (!(responseBody instanceof Array)) {
+    message = 'API lookup error';
+
+  } else {
+    if (!responseBody.length) {
+      message = 'No results for this airport';
+    }
+  }
+  let myNumbers = MakePlayerInfo(responseBody);
+  console.log("HEY THIS IS WHAT IM SENDING TO PUG: " + responseBody.username);
+  res.render('chessplayerinfo',
+    {
+      chosenPlayer: responseBody,
+      players: Players,
+      username: responseBody.username,
+      Numbers: myNumbers
+
+
+
+    }
+  );
+};
+const submitPlayerInfo = (req, res) => {
+  let username = req.body.selectedPlayer;
+  if(req.body.selectedPlayer == null){
+    username = 'Hikaru';
+  }
+  //console.log("HELLLLLLLOOOOOOOO " + req.body.selectedPlayer);
+  const path = `/api/chess/submitPlayer/${username}`;
+  console.log(`${apiOptions.server}${path}`);
+  const requestOptions = {
+    url: `${apiOptions.server}${path}`,
+    method: "POST",
+    json: {}
+  };
+  request(
+    requestOptions,
+    (err, { statusCode }, body) => {
+      console.log(body);
+      console.log("THAT WAS BODY INFO");
+      renderPlayersInfoPage(req, res, body)
     }
   );
 
 }
 
+
 module.exports = {
   submitPlayer,
   chessGameSelection,
   renderGamesPage,
-  renderPlayersPage
+  renderPlayersPage,
+  submitPlayerInfo
 
 };

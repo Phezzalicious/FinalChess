@@ -7,20 +7,20 @@ block content
                 .row
                 .col
                 .jumbotron
-                    h1.text-center Chess Games
+                    h1.text-center Chess Games - All
                     form(action='/chess/submitPlayer', method='POST')
                         select(name='selectedPlayer')
                             each participant in players
                                 option(value=participant) #{participant}
                         input(type='submit', value='Submit')
-                    .row
-                        h2.chosePlayers.username
-                        .col
-                            .table-responsive  
-                            table.table.table-sm.table-hover
+                .row
+                    h2.chosePlayers.username
+                    .col
+                        .table-responsive  
+                            table.table.table-dark.table-sm.table-hover
                                 thead
                                     tr
-                                        th Game Number
+                                        th Game Number 
                                         th Rules
                                         th Rated
                                         th Time Class
@@ -31,7 +31,9 @@ block content
                                         tr
                                             each Game in chosenPlayer.games 
                                                 tr
-                                                    td #{Game.gameNum}
+                                                    td  
+                                                        a(href=Game.url)
+                                                            #{Game.gameNum}
                                                     td #{Game.rules}
                                                     td #{Game.rated}
                                                     td #{Game.time_class}
