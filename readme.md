@@ -1,4 +1,4 @@
-Chess Final 
+# Chess Final 
 This project successfully accomplishes these tasks: 
 1. Get data in an interval from an external api (chess.com API)
 2. This data is current and updating overtime, albeit slowly
