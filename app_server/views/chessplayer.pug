@@ -31,7 +31,9 @@ block content
                                 tbody
                                     each Game in chosenPlayer.games 
                                         tr
-                                            td #{Game.gameNum}
+                                            td 
+                                                a(href=Game.url)
+                                                    #{Game.gameNum}
                                             td #{Game.rules}
                                             td #{Game.rated}
                                             td #{Game.time_class}

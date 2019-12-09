@@ -27,4 +27,3 @@ const playerSchema = new Schema({
 
 mongoose.model('Player', playerSchema);
 
-//const Client = mongoose.model('Client', clientSchema);

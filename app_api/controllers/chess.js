@@ -3,14 +3,14 @@ const Player = mongoose.model('Player');
 
 const formData = (req, res) => {
 
-  //console.log("HI IM FORMDATA: " + req.params.player);
+ 
   Player.findOne({ username: req.params.player},
     (err, docs) => {
       if (!err) {
         //res.send(docs);
       }
       res.send(docs);
-      console.log("Hikaru? " + docs.username)
+      
     }
   );
 }
