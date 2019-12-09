@@ -7,8 +7,8 @@ block content
                 .col
                 .jumbotron
                     h1.text-center Chess Games
-                    form(action='/submitPlayer' + Submit, method='POST')
-                        select(name='')
+                    form(action='/chess/submitPlayer', method='POST')
+                        select(name='selectedPlayer')
                             each player in players
                                 option(value=player) #{player}
                         input(type='submit', value='Submit')
