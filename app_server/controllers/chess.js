@@ -83,10 +83,10 @@ const renderPlayersPage = (req, res, responseBody) => {
       message = 'No results for this airport';
     }
   }
-  console.log("HEY THIS IS WHAT IM SENDING TO PUG: " + res.username);
+  console.log("HEY THIS IS WHAT IM SENDING TO PUG: " + responseBody.username);
   res.render('chessplayer',
     {
-      chosenPlayers: responseBody,
+      chosenPlayer: responseBody,
       players: Players
 
 
@@ -99,14 +99,18 @@ const submitPlayer = (req, res) => {
   const username = req.body.selectedPlayer;
   //console.log("HELLLLLLLOOOOOOOO " + req.body.selectedPlayer);
   const path = `/api/chess/submitPlayer/${username}`;
+  console.log(apiOptions.server+path);
   const requestOptions = {
     url: `${apiOptions.server}${path}`,
     method: 'POST',
+    json: {}
   };
   request(
     requestOptions,
     (err, { statusCode }, body) => {
-  
+      console.log(body);
+      console.log("THAT WAS BODY");
+      renderPlayersPage(req,res,body)
     }    
   );
 

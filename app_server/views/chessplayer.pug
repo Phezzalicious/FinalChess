@@ -25,14 +25,13 @@ block content
                                             th Time Class
                                             th White Result
                                     tbody
-                                        each chosenPlayer in chosenPlayers
-                                                each Game in chosenPlayer.games 
-                                                    tr
-                                                        td #{Game.gameNum}
-                                                        td #{Game.rules}
-                                                        td #{Game.rated}
-                                                        td #{Game.time_class}
-                                                        td #{Game.whiteUsername + " " + Game.whiteResult}
+                                        each Game in chosenPlayer.games 
+                                            tr
+                                                td #{Game.gameNum}
+                                                td #{Game.rules}
+                                                td #{Game.rated}
+                                                td #{Game.time_class}
+                                                td #{Game.whiteUsername + " " + Game.whiteResult}
 
                                    
 
