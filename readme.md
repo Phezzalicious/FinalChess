@@ -12,7 +12,7 @@ While designing this project, I attempted to code it in such a way that would al
 
 ## This project was unable to accomplish these tasks:
 1. Angular was originally a huge part of the project, I decided to drop all Angular aspects. They are not worth including in the submission
-2. I do not have error handling for when my external api returns null, if the player idd not play any games that month my code breaks 
+2. I do not have error handling for when my external api returns null, if the player did not play any games that month my code breaks 
 3. I did not put any effort into status codes being sent or anything like that, I prioritized my other goals 
 4. front-end is very lacking, its a good thing this is a back-end class
 
