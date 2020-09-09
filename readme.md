@@ -18,6 +18,5 @@ While designing this project, I attempted to code it in such a way that would al
 
 
 ## To accomplish this project I used: 
-1. VATSIMHARVESTER was gutted and followed very closely, a deep understanding of vatsimharvester was first acquired before any real progress was made on chessAPI. no method is really the same but every concept was followed in the development of chess 
-2. Clive and Simon wrote a great book. I used it alot more than I thought I would.
-3. Postman was incredibly helpful throuhgout this process, and Deployment to Heroku was really cool. I have been showing family and friends what I am working on. It also allowed some of us to see the progress others were making and talk about how we did that etc... 
+1. Clive and Simon wrote a great book. I used it alot more than I thought I would.
+2. Postman was incredibly helpful throuhgout this process, and Deployment to Heroku was really cool. I have been showing family and friends what I am working on. It also allowed some of us to see the progress others were making and talk about how we did that etc... 
