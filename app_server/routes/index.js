@@ -4,7 +4,7 @@ const ctrlChess = require('../controllers/chess');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Chess Games' });
+  res.render('index', { title: 'Chess Games API' });
 });
 
 router.get('/chess', ctrlChess.chessGameSelection);
